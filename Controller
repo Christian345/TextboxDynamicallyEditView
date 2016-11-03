@@ -1,0 +1,29 @@
+[HttpPost]
+        public ActionResult Create(IEnumerable<ACTIVITES_POSTE> activites)
+        {
+            if (ModelState.IsValid)
+            {
+                ACTIVITES_POSTE activite = new ACTIVITES_POSTE();
+                string test = "";
+                test = String.Join(",", activites.Select(x => x.ACTIVITE_PRINCIPALES));//miconcatener anleh texte separé @na virgule.
+                activite.ACTIVITE_PRINCIPALES = test;
+                db.ACTIVITES_POSTE.Add(activite);//mi-socker azy any@base de données.
+                db.SaveChanges();
+            }
+            return View(description);
+        }
+     //Eto @le modification zah no manana olana   
+        public ActionResult EditActivite(short id)
+        {
+            ACTIVITES_POSTE activite = db.ACTIVITES_POSTE.Find(id);
+            string value = activite.ACTIVITE_PRINCIPALES;//maka anleh texte avy any @base de données
+            List<String> activity;//micréer variable string de type list
+            activity = value.Split(',').ToList();//mampiditr anleh texte retraretra ao anatinleh variable activity
+
+            foreach(var item in activity){
+                var nouveau = new[] { 
+                    new ACTIVITES_POSTE { ACTIVITE_PRINCIPALES = item },//eto zah no manana olana. tsy hitako izay fomba hi-créena anleh array
+                };
+            }
+            return View(activite);
+        }
