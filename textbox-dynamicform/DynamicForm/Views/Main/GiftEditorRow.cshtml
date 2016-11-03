@@ -1,0 +1,13 @@
+﻿@using HtmlHelpers.BeginCollectionItem
+@model DynamicForm.Models.Gift
+
+<div class="editorRow">
+    @using (Html.BeginCollectionItem("gifts"))
+    {
+        <label>Item: </label>
+        @Html.TextBoxFor(x => x.Name)
+        <label>Value: $</label>
+        @Html.TextBoxFor(x => x.Price, new {size = 4})
+        <a href="#" class="deleteRow">delete</a>
+    }
+</div>

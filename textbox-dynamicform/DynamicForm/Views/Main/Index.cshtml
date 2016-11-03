@@ -1,0 +1,50 @@
+﻿@model IEnumerable<DynamicForm.Models.Gift>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(document)
+            .ready(function() {
+
+                $("#addItem")
+                    .click(function() {
+                        $.ajax({
+                            url: this.href,
+                            cache: false,
+                            success: function(data) {
+                                var newRow = $('<div>').append(data).find('.editorRow');
+                                $("#editorRows").append(newRow);
+                            }
+                        });
+                        return false;
+                    });
+
+                $("a.deleteRow").live("click", function () {
+                    $(this).parents("div.editorRow:first").remove();
+                    return false;
+                });
+
+            });
+    </script>
+}
+
+
+<h2>Gift List</h2>
+What do you want for your birthday?
+
+@using (Html.BeginForm())
+{
+    <div id="editorRows">
+        @foreach (var item in Model)
+        {
+            Html.RenderPartial("GiftEditorRow", item);
+        }
+    </div>
+    @Html.ActionLink("Add another...", "BlankEditorRow", null, new {id = "addItem"})
+    <input type="submit" value="Finished"/>
+}
